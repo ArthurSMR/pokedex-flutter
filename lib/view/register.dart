@@ -189,6 +189,9 @@ class Register {
                       ),
                       RaisedButton(
                         color: Color(0xFF2C62A9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: Center(
@@ -228,6 +231,7 @@ class RegisterData {
   bool terms = false;
 
   printValues() {
+    print("Validation successful!");
     print("Username: $user");
     print("Password: $password");
     print("Email: $email");
