@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:pokebla/styles/text_field_style.dart';
-import 'register.dart';
-import 'register.dart';
+import 'package:pokebla/view/pokebla.dart';
 import 'register.dart';
 
 class LoginView extends StatelessWidget {
@@ -83,7 +82,13 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PokeblaView(),
+                    ));
+              },
             ),
             FlatButton(
               onPressed: () => register.mainBottomSheet(context),
