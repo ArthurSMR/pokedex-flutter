@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'text_field_style.dart';
+import '../styles/text_field_style.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
+
+import '../styles/text_field_style.dart';
 
 class Register {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
@@ -76,7 +78,7 @@ class Register {
                             data.user = inValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite seu usuário"),
+                              TextFieldStyle.textStyle("Digite seu usuário"),
                         ),
                       ),
                       Padding(
@@ -106,7 +108,7 @@ class Register {
                             data.password = inValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite sua senha"),
+                              TextFieldStyle.textStyle("Digite sua senha"),
                         ),
                       ),
                       Padding(
@@ -135,7 +137,7 @@ class Register {
                             }
                             return null;
                           },
-                          decoration: UserTextStyle.textStyle(
+                          decoration: TextFieldStyle.textStyle(
                               "Digite sua senha novamente"),
                         ),
                       ),
@@ -166,7 +168,7 @@ class Register {
                             data.email = newValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite seu e-mail"),
+                              TextFieldStyle.textStyle("Digite seu e-mail"),
                         ),
                       ),
                       Padding(

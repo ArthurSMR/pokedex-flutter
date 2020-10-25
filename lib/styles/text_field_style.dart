@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserTextStyle {
+class TextFieldStyle {
   static InputDecoration textStyle(String hint) {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 8),
