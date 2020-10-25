@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../styles/text_field_style.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
-
+import '../model/user.dart';
 import '../styles/text_field_style.dart';
 
-class Register {
+class RegisterView {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  final RegisterData data = new RegisterData();
+  final User data = new User();
   final TextEditingController pass = TextEditingController();
   final TextEditingController confirmPass = TextEditingController();
 
@@ -75,7 +75,7 @@ class Register {
                             return null;
                           },
                           onSaved: (String inValue) {
-                            data.user = inValue;
+                            data.username = inValue;
                           },
                           decoration:
                               TextFieldStyle.textStyle("Digite seu usuário"),
@@ -223,20 +223,5 @@ class Register {
         );
       },
     );
-  }
-}
-
-class RegisterData {
-  String user = "";
-  String password = "";
-  String email = "";
-  bool terms = false;
-
-  printValues() {
-    print("Validation successful!");
-    print("Username: $user");
-    print("Password: $password");
-    print("Email: $email");
-    print("O usuário concorda com os termos? $terms");
   }
 }

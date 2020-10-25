@@ -3,9 +3,12 @@ import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:pokebla/styles/text_field_style.dart';
 import 'package:pokebla/view/pokebla.dart';
 import 'register.dart';
+import '../model/user.dart';
 
 class LoginView extends StatelessWidget {
-  Register register = new Register();
+  final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  RegisterView register = new RegisterView();
+  User user = new User();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +17,7 @@ class LoginView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Form(
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -36,7 +40,15 @@ class LoginView extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  TextField(
+                  TextFormField(
+                    validator: (String inValue) {
+                      if (inValue.length == 0) {
+                        return "Preencha seu usuário";
+                      }
+                    },
+                    onSaved: (String inValue) {
+                      user.username = inValue;
+                    },
                     decoration: TextFieldStyle.textStyle("Usuário"),
                   ),
                   Padding(
@@ -49,9 +61,17 @@ class LoginView extends StatelessWidget {
                       fontSize: 16,
                     ),
                   ),
-                  TextField(
+                  TextFormField(
                     decoration: TextFieldStyle.textStyle("Senha"),
                     obscureText: true,
+                    validator: (String inValue) {
+                      if (inValue.length == 0) {
+                        return "Preencha sua senha";
+                      }
+                    },
+                    onSaved: (String inValue) {
+                      user.password = inValue;
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -83,11 +103,15 @@ class LoginView extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PokeblaView(),
-                    ));
+                if (formKey.currentState.validate()) {
+                  formKey.currentState.save();
+                  user.printValues();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PokeblaView(),
+                      ));
+                }
               },
             ),
             FlatButton(
@@ -103,11 +127,6 @@ class LoginView extends StatelessWidget {
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Colors.white,
-      //   onPressed: () => register.mainBottomSheet(context),
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
