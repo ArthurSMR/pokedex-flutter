@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'text_field_style.dart';
+import '../styles/text_field_style.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
+import '../model/user.dart';
+import '../styles/text_field_style.dart';
 
-class Register {
+class RegisterView {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  final RegisterData data = new RegisterData();
+  final User data = new User();
   final TextEditingController pass = TextEditingController();
   final TextEditingController confirmPass = TextEditingController();
 
@@ -73,10 +75,10 @@ class Register {
                             return null;
                           },
                           onSaved: (String inValue) {
-                            data.user = inValue;
+                            data.username = inValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite seu usuário"),
+                              TextFieldStyle.textStyle("Digite seu usuário"),
                         ),
                       ),
                       Padding(
@@ -106,7 +108,7 @@ class Register {
                             data.password = inValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite sua senha"),
+                              TextFieldStyle.textStyle("Digite sua senha"),
                         ),
                       ),
                       Padding(
@@ -135,7 +137,7 @@ class Register {
                             }
                             return null;
                           },
-                          decoration: UserTextStyle.textStyle(
+                          decoration: TextFieldStyle.textStyle(
                               "Digite sua senha novamente"),
                         ),
                       ),
@@ -166,7 +168,7 @@ class Register {
                             data.email = newValue;
                           },
                           decoration:
-                              UserTextStyle.textStyle("Digite seu e-mail"),
+                              TextFieldStyle.textStyle("Digite seu e-mail"),
                         ),
                       ),
                       Padding(
@@ -221,20 +223,5 @@ class Register {
         );
       },
     );
-  }
-}
-
-class RegisterData {
-  String user = "";
-  String password = "";
-  String email = "";
-  bool terms = false;
-
-  printValues() {
-    print("Validation successful!");
-    print("Username: $user");
-    print("Password: $password");
-    print("Email: $email");
-    print("O usuário concorda com os termos? $terms");
   }
 }

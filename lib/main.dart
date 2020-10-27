@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokebla/view/login.dart';
 import 'view/register.dart';
 
 Map<int, Color> color = {
@@ -43,26 +44,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Register register = new Register();
+  RegisterView register = new RegisterView();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Login',
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        onPressed: () => register.mainBottomSheet(context),
-        child: Icon(Icons.add),
-      ),
-    );
+    return LoginView();
   }
 }
