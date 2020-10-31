@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:pokebla/model/pokemon.dart';
 
 class PokemonCellView {
-  static Scaffold build(BuildContext context, String imageURL,
-      String pokemonName, String pokemonType) {
+  static Scaffold build(BuildContext context, Pokemon pokemon) {
     return Scaffold(
       body: Container(
+        height: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -22,7 +23,7 @@ class PokemonCellView {
             decoration: BoxDecoration(
               color: Colors.transparent,
               image: DecorationImage(
-                image: NetworkImage(imageURL),
+                image: NetworkImage(pokemon.imageURL),
               ),
               borderRadius: BorderRadius.circular(32.0),
               border: Border.all(
@@ -32,14 +33,14 @@ class PokemonCellView {
             ),
           ),
           title: Text(
-            pokemonName,
+            pokemon.name,
             style: TextStyle(
               fontSize: 18.0,
               color: Colors.black,
             ),
           ),
           subtitle: Text(
-            pokemonType,
+            pokemon.type,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16.0,
