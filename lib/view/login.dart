@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/styles/text_field_style.dart';
-import 'package:pokebla/view/pokebla.dart';
+import 'package:pokebla/view/Pokedex/pokedex.dart';
 import 'register.dart';
 import '../model/user.dart';
 
@@ -11,7 +11,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
@@ -110,7 +110,7 @@ class LoginView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PokeblaView(),
+                        builder: (context) => PokedexView(),
                       ));
                 }
               },
