@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles/text_field_style.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import '../model/user.dart';
 import '../styles/text_field_style.dart';
@@ -184,6 +183,7 @@ class RegisterView {
                           if (!value) {
                             return "Assine os termos de condições de uso!";
                           }
+                          return null;
                         },
                       ),
                       Padding(

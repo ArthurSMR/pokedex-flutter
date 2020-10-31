@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/view/login.dart';
+import 'package:pokebla/view/pokebla.dart';
 import 'view/register.dart';
+
+// retirar o import depois
+import 'view/profile.dart';
 
 Map<int, Color> color = {
   50: Color.fromRGBO(255, 218, 78, .1),
@@ -48,6 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LoginView();
+    return PokeblaView();
   }
 }

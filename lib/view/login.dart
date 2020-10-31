@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:checkbox_formfield/checkbox_formfield.dart';
 import 'package:pokebla/styles/text_field_style.dart';
 import 'package:pokebla/view/pokebla.dart';
 import 'register.dart';
@@ -7,8 +6,8 @@ import '../model/user.dart';
 
 class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  RegisterView register = new RegisterView();
-  User user = new User();
+  final RegisterView register = new RegisterView();
+  final User user = new User();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +44,7 @@ class LoginView extends StatelessWidget {
                       if (inValue.length == 0) {
                         return "Preencha seu usuário";
                       }
+                      return null;
                     },
                     onSaved: (String inValue) {
                       user.username = inValue;
@@ -68,6 +68,7 @@ class LoginView extends StatelessWidget {
                       if (inValue.length == 0) {
                         return "Preencha sua senha";
                       }
+                      return null;
                     },
                     onSaved: (String inValue) {
                       user.password = inValue;
