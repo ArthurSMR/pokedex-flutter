@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pokebla/Mock/PokemonData.dart';
+import 'package:pokebla/mock/pokemon_data.dart';
 import '../../model/pokemon.dart';
-import 'PokemonList.dart';
+import 'pokemon_list.dart';
 
 class PokedexView extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ class _PokedexViewState extends State<PokedexView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text('Pokedex'),
       ),
       body: Column(

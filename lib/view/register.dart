@@ -211,6 +211,7 @@ class RegisterView {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             data.printValues();
+                            Navigator.pop(context);
                           }
                         },
                       ),

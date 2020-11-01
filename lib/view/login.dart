@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/styles/text_field_style.dart';
-import 'package:pokebla/view/Pokedex/pokedex.dart';
 import 'register.dart';
 import '../model/user.dart';
+import 'bottom_bar.dart';
 
 class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
@@ -110,7 +110,7 @@ class LoginView extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PokedexView(),
+                        builder: (context) => BottomBar(),
                       ));
                 }
               },

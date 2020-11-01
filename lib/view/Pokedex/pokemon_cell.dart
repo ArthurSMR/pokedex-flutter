@@ -5,7 +5,6 @@ class PokemonCellView {
   static Scaffold build(BuildContext context, Pokemon pokemon) {
     return Scaffold(
       body: Container(
-        height: 200,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
