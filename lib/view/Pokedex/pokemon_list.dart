@@ -12,6 +12,7 @@ class PokemonList extends StatefulWidget {
 }
 
 class _PokemonListState extends State<PokemonList> {
+  PokemonCellView pokemonCellView = PokemonCellView();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -24,7 +25,7 @@ class _PokemonListState extends State<PokemonList> {
               Expanded(
                 child: SizedBox(
                   height: 72,
-                  child: PokemonCellView.build(context, pokemon),
+                  child: pokemonCellView.build(context, pokemon),
                 ),
               )
             ],
