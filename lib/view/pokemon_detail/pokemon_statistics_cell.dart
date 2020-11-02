@@ -16,7 +16,13 @@ class PokemonStatisticsCell {
               height: MediaQuery.of(context).size.height,
             ),
             Padding(padding: EdgeInsets.only(right: 8)),
-            Text(statisticsType.name),
+            Text(
+              statisticsType.name,
+              style: TextStyle(
+                fontFamily: 'Lato',
+                fontSize: 16.0,
+              ),
+            ),
             Spacer(
               flex: 1,
             ),
@@ -35,6 +41,9 @@ class PokemonStatisticsCell {
                   pokemon.statistics.getValueFor(statisticsType),
                   style: TextStyle(
                     color: Colors.white,
+                    fontFamily: 'Lato',
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

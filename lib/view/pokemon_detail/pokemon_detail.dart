@@ -50,14 +50,15 @@ class PokemonDetail {
                     height: MediaQuery.of(context).size.height / 4,
                     child: Center(
                       child: Container(
-                        height: 104,
-                        width: 104,
+                        height: MediaQuery.of(context).size.height * 104 / 640,
+                        width: MediaQuery.of(context).size.height * 104 / 640,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           image: DecorationImage(
                             image: NetworkImage(pokemon.imageURL),
                           ),
-                          borderRadius: BorderRadius.circular(52.0),
+                          borderRadius: BorderRadius.circular(
+                              MediaQuery.of(context).size.height * 104 / 640),
                           border: Border.all(
                             color: Colors.black,
                             width: 0.5,
@@ -88,6 +89,23 @@ class PokemonDetail {
                           Expanded(
                             child:
                                 PokemonStatisticsList(pokemon).build(context),
+                          ),
+                          ButtonTheme(
+                            minWidth:
+                                MediaQuery.of(context).size.width - 32 / 640,
+                            child: RaisedButton(
+                              onPressed: () {},
+                              textColor: Colors.white,
+                              color: Color(0xFF2C62A9),
+                              child: Text(
+                                'Adicionar à equipe',
+                                style: TextStyle(
+                                  fontFamily: 'Lato',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),

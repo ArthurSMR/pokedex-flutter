@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/model/pokemon.dart';
 import '../pokemon_detail/pokemon_detail.dart';
+import '../../model/pokemon_type.dart';
 
 class PokemonCellView {
   PokemonDetail pokemonDetail = PokemonDetail();
@@ -38,6 +39,7 @@ class PokemonCellView {
           title: Text(
             pokemon.name,
             style: TextStyle(
+              fontFamily: 'Lato',
               fontSize: 18.0,
               color: Colors.black,
             ),
@@ -46,6 +48,7 @@ class PokemonCellView {
             pokemon.type.name,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
+              fontFamily: 'Lato',
               fontSize: 16.0,
               color: Colors.grey,
             ),
