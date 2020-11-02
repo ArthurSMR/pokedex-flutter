@@ -51,6 +51,14 @@ flutter:
       - Assets/gabriel.jpg
       - Assets/unicamp.png
 
+      # Icons
+      - Assets/Icons/shield.png
+      - Assets/Icons/sword.png
+      - Assets/Icons/speed.png
+      - Assets/Icons/star.png
+      - Assets/Icons/special_shield.png
+      - Assets/Icons/heart.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -43,7 +43,7 @@ class PokemonCellView {
             ),
           ),
           subtitle: Text(
-            pokemon.type,
+            pokemon.type.name,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 16.0,

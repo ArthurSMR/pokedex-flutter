@@ -23,14 +23,23 @@ class Team {
   static List<Pokemon> mockProfileTeam() {
     List<Pokemon> team = [];
 
-    Pokemon pokemon1 = new Pokemon('Rayquaza', 'Dragon',
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/384.png');
+    Pokemon pokemon1 = new Pokemon(
+        'Rayquaza',
+        PokemonType.Fire,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/384.png',
+        Statistics(attack: 10, defense: 20));
     team.add(pokemon1);
-    Pokemon pokemon2 = new Pokemon('Blastoise', 'Water',
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png');
+    Pokemon pokemon2 = new Pokemon(
+        'Blastoise',
+        PokemonType.Water,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png',
+        Statistics(attack: 100, defense: 30));
     team.add(pokemon2);
-    Pokemon pokemon3 = new Pokemon('Raichu', 'Electric',
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png');
+    Pokemon pokemon3 = new Pokemon(
+        'Raichu',
+        PokemonType.Fire,
+        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png',
+        Statistics(attack: 40, defense: 123));
     team.add(pokemon3);
     return team;
   }
