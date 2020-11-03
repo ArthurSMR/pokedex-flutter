@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/model/pokemon.dart';
+import '../pokemon_detail/pokemon_detail.dart';
+import '../../model/pokemon_type.dart';
 
 class PokemonCellView {
-  static Scaffold build(BuildContext context, Pokemon pokemon) {
+  PokemonDetail pokemonDetail = PokemonDetail();
+  Scaffold build(BuildContext context, Pokemon pokemon) {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -10,7 +13,9 @@ class PokemonCellView {
           borderRadius: BorderRadius.circular(8),
         ),
         child: ListTile(
-          onTap: () {},
+          onTap: () {
+            pokemonDetail.mainBottomSheet(context, pokemon);
+          },
           selected: true,
           trailing: Icon(
             Icons.keyboard_arrow_right,
@@ -34,14 +39,16 @@ class PokemonCellView {
           title: Text(
             pokemon.name,
             style: TextStyle(
+              fontFamily: 'Lato',
               fontSize: 18.0,
               color: Colors.black,
             ),
           ),
           subtitle: Text(
-            pokemon.type,
+            pokemon.type.name,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
+              fontFamily: 'Lato',
               fontSize: 16.0,
               color: Colors.grey,
             ),

@@ -81,7 +81,7 @@ class _ProfileViewState extends State<ProfileView> {
                   top: MediaQuery.of(context).size.height * 0.0375),
             ),
             Text(
-              "Minha equipe (6/6)",
+              "Minha equipe (${pokemons.length}/6)",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Expanded(
