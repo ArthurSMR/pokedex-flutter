@@ -5,8 +5,10 @@ FirebaseAuth auth = FirebaseAuth.instance;
 
 Future<bool> signUp(String email, String password, String user) async {
   try {
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
-    bool result = await registerUser(user, password, email);
+    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    bool result =
+        await registerUser(user, password, email, userCredential.user.uid);
     if (result) {
       return Future.value(true);
     } else {

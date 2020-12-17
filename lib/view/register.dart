@@ -212,10 +212,13 @@ class RegisterView {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             data.printValues();
+
                             bool result = await signUp(
                                 data.email, data.password, data.username);
                             if (result) {
                               Navigator.pop(context);
+                              pass.clear();
+                              confirmPass.clear();
                             } else {
                               print("Register account was not completed");
                             }
