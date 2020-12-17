@@ -3,6 +3,7 @@ import 'package:pokebla/styles/text_field_style.dart';
 import 'register.dart';
 import '../model/user.dart';
 import 'bottom_bar.dart';
+import '../controller/authentication.dart';
 
 class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
@@ -33,7 +34,7 @@ class LoginView extends StatelessWidget {
                         bottom: MediaQuery.of(context).size.height * 72 / 660),
                   ),
                   Text(
-                    "Usuário",
+                    "E-mail",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -41,15 +42,15 @@ class LoginView extends StatelessWidget {
                   ),
                   TextFormField(
                     validator: (String inValue) {
-                      if (inValue.length == 0) {
-                        return "Preencha seu usuário";
+                      if (inValue.length == 0 || !(inValue.contains('@'))) {
+                        return "Preencha seu e-mail";
                       }
                       return null;
                     },
                     onSaved: (String inValue) {
-                      user.username = inValue;
+                      user.email = inValue;
                     },
-                    decoration: TextFieldStyle.textStyle("Usuário"),
+                    decoration: TextFieldStyle.textStyle("E-mail"),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16),
@@ -103,15 +104,21 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState.validate()) {
                   formKey.currentState.save();
                   user.printValues();
-                  Navigator.push(
+                  bool result = await signIn(user.email, user.password);
+                  if (result) {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => BottomBar(),
-                      ));
+                      ),
+                    );
+                  } else {
+                    print("Login was not completed successfully");
+                  }
                 }
               },
             ),

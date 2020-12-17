@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import '../model/user.dart';
 import '../styles/text_field_style.dart';
+import '../controller/authentication.dart';
 
 class RegisterView {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
@@ -207,11 +208,17 @@ class RegisterView {
                             ),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             data.printValues();
-                            Navigator.pop(context);
+                            bool result = await signUp(
+                                data.email, data.password, data.username);
+                            if (result) {
+                              Navigator.pop(context);
+                            } else {
+                              print("Register account was not completed");
+                            }
                           }
                         },
                       ),

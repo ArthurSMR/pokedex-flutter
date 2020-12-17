@@ -33,8 +33,8 @@ class Team {
           hp: 100,
           attack: 40,
           defense: 10,
-          special_atack: 35,
-          special_defense: 70,
+          specialAttack: 35,
+          specialDefense: 70,
           speed: 42),
     );
     team.add(pokemon1);
@@ -47,8 +47,8 @@ class Team {
           hp: 100,
           attack: 40,
           defense: 10,
-          special_atack: 35,
-          special_defense: 70,
+          specialAttack: 35,
+          specialDefense: 70,
           speed: 42),
     );
     team.add(pokemon2);
@@ -61,8 +61,8 @@ class Team {
           hp: 100,
           attack: 40,
           defense: 10,
-          special_atack: 35,
-          special_defense: 70,
+          specialAttack: 35,
+          specialDefense: 70,
           speed: 42),
     );
     team.add(pokemon3);
