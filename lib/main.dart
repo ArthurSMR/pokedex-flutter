@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/view/login.dart';
 import 'view/register.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Map<int, Color> color = {
   50: Color.fromRGBO(255, 218, 78, .1),
@@ -15,7 +16,9 @@ Map<int, Color> color = {
   900: Color.fromRGBO(255, 218, 78, 1),
 };
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

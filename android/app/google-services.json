@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "500342178598",
+    "firebase_url": "https://pokedex-flutter-5ad0c.firebaseio.com",
+    "project_id": "pokedex-flutter-5ad0c",
+    "storage_bucket": "pokedex-flutter-5ad0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500342178598:android:1903f953277733367ab7e7",
+        "android_client_info": {
+          "package_name": "com.example.pokebla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500342178598-kbqlel8o59kjt2l3hrgqcu4pbftmrm5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pokebla",
+            "certificate_hash": "f0f42ad73999e1d5b9bbbd23012dee5181beacb8"
+          }
+        },
+        {
+          "client_id": "500342178598-tm7iq7dkpub9fh7ochaac4bpm0g5lv04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVrtZqyj35jNNvULdS78-HsiR202bhlTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500342178598-tm7iq7dkpub9fh7ochaac4bpm0g5lv04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

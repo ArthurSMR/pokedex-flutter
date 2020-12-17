@@ -5,22 +5,22 @@ class Statistics {
   int hp;
   int attack;
   int defense;
-  int special_attack;
-  int special_defense;
+  int specialAttack;
+  int specialDefense;
   int speed;
 
   Statistics(
       {@required int hp,
       @required int attack,
       @required int defense,
-      @required int special_atack,
-      @required int special_defense,
+      @required int specialAttack,
+      @required int specialDefense,
       @required int speed}) {
     this.hp = hp;
     this.attack = attack;
     this.defense = defense;
-    this.special_attack = special_atack;
-    this.special_defense = special_defense;
+    this.specialAttack = specialAttack;
+    this.specialDefense = specialDefense;
     this.speed = speed;
   }
 
@@ -33,12 +33,13 @@ class Statistics {
       case StatisticsType.Defense:
         return defense.toString();
       case StatisticsType.SpecialAttack:
-        return special_attack.toString();
+        return specialAttack.toString();
       case StatisticsType.SpecialDefense:
-        return special_defense.toString();
+        return specialDefense.toString();
       case StatisticsType.Speed:
         return speed.toString();
       default:
+        return "Type not found";
         break;
     }
   }
