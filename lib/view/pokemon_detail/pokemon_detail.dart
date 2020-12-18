@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokebla/model/pokemon.dart';
+import 'package:pokebla/model/pokeapi.dart';
 import 'Pokemon_statistics_list.dart';
 
 class PokemonDetail {
@@ -55,7 +55,7 @@ class PokemonDetail {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           image: DecorationImage(
-                            image: NetworkImage(pokemon.imageURL),
+                            image: NetworkImage(pokemon.img),
                           ),
                           borderRadius: BorderRadius.circular(
                               MediaQuery.of(context).size.height * 104 / 640),

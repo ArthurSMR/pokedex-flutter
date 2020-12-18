@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokebla/model/pokeapiv2.dart';
 // import 'package:pokebla/model/pokemon.dart';
 import '../../model/pokeapi.dart';
 import '../pokemon_detail/pokemon_detail.dart';
@@ -13,9 +14,9 @@ class PokemonCellView {
           borderRadius: BorderRadius.circular(8),
         ),
         child: ListTile(
-          // onTap: () {
-          //   pokemonDetail.mainBottomSheet(context, pokemon);
-          // },
+          onTap: () {
+            pokemonDetail.mainBottomSheet(context, pokemon);
+          },
           selected: true,
           trailing: Icon(
             Icons.keyboard_arrow_right,
