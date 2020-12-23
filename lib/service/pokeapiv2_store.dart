@@ -29,7 +29,7 @@ abstract class _PokeApiV2StoreBase with Store {
       var decodeJson = jsonDecode(response.body);
       return PokeApiV2.fromJson(decodeJson);
     } catch (error) {
-      print("Erro ao carregar lista");
+      print(error.toString());
       return null;
     }
   }

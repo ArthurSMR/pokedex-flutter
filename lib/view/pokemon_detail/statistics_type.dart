@@ -51,9 +51,9 @@ extension StatisticsTypeExtension on StatisticsType {
   Color color(int valueForStatisticType) {
     if (valueForStatisticType >= 70) {
       return Color(0xFF58BC2A);
-    } else if (valueForStatisticType < 70 && valueForStatisticType > 30) {
+    } else if (valueForStatisticType < 70 && valueForStatisticType > 45) {
       return Color(0xFFFFCA00);
-    } else if (valueForStatisticType <= 30) {
+    } else if (valueForStatisticType <= 45) {
       return Color(0xFFEB5757);
     }
     return Color(0xFF58BC2A);
