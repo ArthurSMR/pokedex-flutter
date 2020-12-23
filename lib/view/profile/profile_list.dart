@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../model/pokemon.dart';
+// import '../../model/pokemon.dart';
+import '../../model/pokeapi.dart';
 import '../Pokedex/pokemon_cell.dart';
 
 class PokemonList extends StatefulWidget {

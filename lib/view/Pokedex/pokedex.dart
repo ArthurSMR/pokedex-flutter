@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pokebla/mock/pokemon_data.dart';
-import '../../model/pokemon.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import '../../service/pokeapi_store.dart';
 import 'pokemon_list.dart';
 
 class PokedexView extends StatefulWidget {
@@ -10,7 +10,13 @@ class PokedexView extends StatefulWidget {
 }
 
 class _PokedexViewState extends State<PokedexView> {
-  List<Pokemon> pokemons = PokemonData.mockPokemons();
+  PokeApiStore pokeApiStore;
+  @override
+  void initState() {
+    super.initState();
+    pokeApiStore = PokeApiStore();
+    pokeApiStore.fetchPokemonList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,17 @@ class _PokedexViewState extends State<PokedexView> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: PokemonList(this.pokemons),
+            child: Observer(
+                name: "Pokedex",
+                builder: (BuildContext context) {
+                  return (pokeApiStore.pokeAPI != null)
+                      ? PokemonList(this.pokeApiStore.pokeAPI.pokemon)
+                      : Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.black,
+                          ),
+                        );
+                }),
           ),
         ],
       ),

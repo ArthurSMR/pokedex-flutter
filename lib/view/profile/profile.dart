@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../model/pokemon.dart';
+// import '../../model/pokemon.dart';
+import '../../model/pokeapi.dart';
 import '../../mock/database_team.dart';
 import 'profile_list.dart';
 
@@ -9,7 +10,7 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  List<Pokemon> pokemons = Team.mockProfileTeam();
+  List<Pokemon> pokemons;
 
   @override
   Widget build(BuildContext context) {

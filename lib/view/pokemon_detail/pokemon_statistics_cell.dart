@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/view/pokemon_detail/statistics_type.dart';
 import 'statistics_type.dart';
-import '../../model/pokemon.dart';
+import '../../model/pokeapiv2.dart';
 
 class PokemonStatisticsCell {
-  Scaffold build(
-      BuildContext context, Pokemon pokemon, StatisticsType statisticsType) {
+  Scaffold build(BuildContext context, PokeApiV2 pokemon,
+      StatisticsType statisticsType, int index) {
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -28,8 +28,7 @@ class PokemonStatisticsCell {
             ),
             Container(
               decoration: BoxDecoration(
-                color: statisticsType.color(
-                    int.parse(pokemon.statistics.getValueFor(statisticsType))),
+                color: statisticsType.color(pokemon.stats[index].baseStat),
                 borderRadius: BorderRadius.all(
                   Radius.circular(8),
                 ),
@@ -38,7 +37,7 @@ class PokemonStatisticsCell {
               height: MediaQuery.of(context).size.width * 40 / 640,
               child: Center(
                 child: Text(
-                  pokemon.statistics.getValueFor(statisticsType),
+                  pokemon.stats[index].baseStat.toString(),
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Lato',
