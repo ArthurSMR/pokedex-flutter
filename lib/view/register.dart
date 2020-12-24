@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import '../model/user.dart';
 import '../styles/text_field_style.dart';
-import '../dao/authentication.dart';
+import '../controller/authentication.dart';
 
 class RegisterView {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
