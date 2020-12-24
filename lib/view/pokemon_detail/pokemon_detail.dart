@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/model/pokeapi.dart';
 import 'Pokemon_statistics_list.dart';
+import '../../controller/database.dart';
 
 class PokemonDetail {
   mainBottomSheet(BuildContext context, Pokemon pokemon) {
@@ -94,7 +95,9 @@ class PokemonDetail {
                             minWidth:
                                 MediaQuery.of(context).size.width - 32 / 640,
                             child: RaisedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                addPokemonToTeam(pokemon.name.toLowerCase());
+                              },
                               textColor: Colors.white,
                               color: Color(0xFF2C62A9),
                               child: Text(
