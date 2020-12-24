@@ -36,6 +36,20 @@ Future<List<String>> getFirebaseTeam() async {
   }
 }
 
+Future<bool> addPokemonToTeam(String pokemonName) async {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  CollectionReference teamCollection = FirebaseFirestore.instance
+      .collection("users/" + firebaseAuth.currentUser.uid + "/team");
+
+  try {
+    await teamCollection.doc(pokemonName).set({"name": pokemonName});
+    return Future.value(true);
+  } catch (e) {
+    return Future.value(false);
+  }
+}
+
 Future<bool> removePokemonFromTeam(String pokemonName) async {
   FirebaseAuth auth = FirebaseAuth.instance;
 
