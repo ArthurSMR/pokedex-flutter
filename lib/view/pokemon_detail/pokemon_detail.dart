@@ -4,7 +4,8 @@ import 'Pokemon_statistics_list.dart';
 import '../../dao/database.dart';
 
 class PokemonDetail {
-  mainBottomSheet(BuildContext context, Pokemon pokemon) {
+  mainBottomSheet(BuildContext context, Pokemon pokemon,
+      bool pokemonAlreadyAtTeam, bool canAddMoreToTeam) {
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -91,25 +92,52 @@ class PokemonDetail {
                             child:
                                 PokemonStatisticsList(pokemon).build(context),
                           ),
-                          ButtonTheme(
-                            minWidth:
-                                MediaQuery.of(context).size.width - 32 / 640,
-                            child: RaisedButton(
-                              onPressed: () {
-                                addPokemonToTeam(pokemon.name.toLowerCase());
-                              },
-                              textColor: Colors.white,
-                              color: Color(0xFF2C62A9),
-                              child: Text(
-                                'Adicionar à equipe',
-                                style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                          (pokemonAlreadyAtTeam)
+                              ? ButtonTheme(
+                                  minWidth: MediaQuery.of(context).size.width -
+                                      32 / 640,
+                                  child: RaisedButton(
+                                    onPressed: () {},
+                                    textColor: Colors.white,
+                                    color: Colors.grey,
+                                    child: Text(
+                                      pokemon.name +
+                                          " já foi adicionado à sua equipe",
+                                      style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : ButtonTheme(
+                                  minWidth: MediaQuery.of(context).size.width -
+                                      32 / 640,
+                                  child: RaisedButton(
+                                    onPressed: () {
+                                      if (canAddMoreToTeam) {
+                                        print(canAddMoreToTeam.toString());
+                                        addPokemonToTeam(
+                                            pokemon.name.toLowerCase());
+                                        Navigator.pop(context);
+                                      } else {
+                                        print("else");
+                                        showAlertDialog(context);
+                                      }
+                                    },
+                                    textColor: Colors.white,
+                                    color: Color(0xFF2C62A9),
+                                    child: Text(
+                                      'Adicionar à equipe',
+                                      style: TextStyle(
+                                        fontFamily: 'Lato',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -119,6 +147,34 @@ class PokemonDetail {
             );
           },
         );
+      },
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sua equipe está cheia"),
+      content: Text(
+          "Você só pode ter até 6 pokemons na sua equipe. Para editar sua equipe, entre no seu perfil."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }

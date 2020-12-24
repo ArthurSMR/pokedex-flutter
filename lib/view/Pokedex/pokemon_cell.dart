@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/model/pokeapiv2.dart';
-// import 'package:pokebla/model/pokemon.dart';
 import '../../model/pokeapi.dart';
 import '../pokemon_detail/pokemon_detail.dart';
+import '../../dao/database.dart';
 
 class PokemonCellView {
   PokemonDetail pokemonDetail = PokemonDetail();
@@ -14,8 +14,24 @@ class PokemonCellView {
           borderRadius: BorderRadius.circular(8),
         ),
         child: ListTile(
-          onTap: () {
-            pokemonDetail.mainBottomSheet(context, pokemon);
+          onTap: () async {
+            var pokemonAlreadyAtTeam = false;
+            var canAddMoreToTeam = false;
+            var team = await getFirebaseTeam();
+
+            team.forEach((pokemonName) {
+              if (pokemonName == pokemon.name.toLowerCase()) {
+                pokemonAlreadyAtTeam = true;
+              }
+            });
+
+            if (team.length < 6) {
+              print(team);
+              canAddMoreToTeam = true;
+            }
+
+            pokemonDetail.mainBottomSheet(
+                context, pokemon, pokemonAlreadyAtTeam, canAddMoreToTeam);
           },
           selected: true,
           trailing: Icon(
