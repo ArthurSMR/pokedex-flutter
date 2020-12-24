@@ -23,6 +23,25 @@ abstract class _PokeApiStoreBase with Store {
     });
   }
 
+  @observable
+  List<Pokemon> _pokeList;
+
+  @computed
+  List<Pokemon> get pokeList => _pokeList;
+
+  @action
+  getTeam(List<String> team) {
+    List<Pokemon> list = List<Pokemon>();
+    team.forEach((pokemonName) {
+      pokeAPI.pokemons.forEach((pokemon) {
+        if (pokemon.name.toLowerCase() == pokemonName) {
+          list.add(pokemon);
+        }
+      });
+    });
+    _pokeList = list;
+  }
+
   Future<PokeAPI> loadPokeAPI() async {
     try {
       final response = await http.get(pokeAPIUrl);

@@ -32,7 +32,7 @@ class _PokedexViewState extends State<PokedexView> {
                 name: "Pokedex",
                 builder: (BuildContext context) {
                   return (pokeApiStore.pokeAPI != null)
-                      ? PokemonList(this.pokeApiStore.pokeAPI.pokemon)
+                      ? PokemonList(this.pokeApiStore.pokeAPI.pokemons)
                       : Center(
                           child: CircularProgressIndicator(
                             backgroundColor: Colors.black,
