@@ -3,7 +3,7 @@ import 'package:pokebla/styles/text_field_style.dart';
 import 'register.dart';
 import '../model/user.dart';
 import 'bottom_bar.dart';
-import '../controller/authentication.dart';
+import '../dao/authentication.dart';
 
 class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();

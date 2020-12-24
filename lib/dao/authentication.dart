@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:pokebla/controller/database.dart';
+import 'package:pokebla/dao/database.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 

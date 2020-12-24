@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-// import '../../model/pokemon.dart';
-import '../../model/pokeapi.dart';
-import '../../mock/database_team.dart';
 import 'profile_list.dart';
 
 class ProfileView extends StatefulWidget {
@@ -10,8 +7,6 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  List<Pokemon> pokemons;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,11 +77,11 @@ class _ProfileViewState extends State<ProfileView> {
                   top: MediaQuery.of(context).size.height * 0.0375),
             ),
             Text(
-              "Minha equipe (${pokemons.length}/6)",
+              "Minha equipe",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Expanded(
-              child: PokemonList(this.pokemons),
+              child: PokemonList(),
             ),
           ],
         ),

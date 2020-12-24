@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokebla/model/pokeapi.dart';
 import 'Pokemon_statistics_list.dart';
-import '../../controller/database.dart';
+import '../../dao/database.dart';
 
 class PokemonDetail {
   mainBottomSheet(BuildContext context, Pokemon pokemon) {

@@ -16,6 +16,13 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
       (_$pokeAPIComputed ??= Computed<PokeAPI>(() => super.pokeAPI,
               name: '_PokeApiStoreBase.pokeAPI'))
           .value;
+  Computed<List<Pokemon>> _$pokeListComputed;
+
+  @override
+  List<Pokemon> get pokeList =>
+      (_$pokeListComputed ??= Computed<List<Pokemon>>(() => super.pokeList,
+              name: '_PokeApiStoreBase.pokeList'))
+          .value;
 
   final _$_pokeAPIAtom = Atom(name: '_PokeApiStoreBase._pokeAPI');
 
@@ -29,6 +36,21 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   set _pokeAPI(PokeAPI value) {
     _$_pokeAPIAtom.reportWrite(value, super._pokeAPI, () {
       super._pokeAPI = value;
+    });
+  }
+
+  final _$_pokeListAtom = Atom(name: '_PokeApiStoreBase._pokeList');
+
+  @override
+  List<Pokemon> get _pokeList {
+    _$_pokeListAtom.reportRead();
+    return super._pokeList;
+  }
+
+  @override
+  set _pokeList(List<Pokemon> value) {
+    _$_pokeListAtom.reportWrite(value, super._pokeList, () {
+      super._pokeList = value;
     });
   }
 
@@ -47,9 +69,21 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   }
 
   @override
+  dynamic getTeam(List<String> team) {
+    final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
+        name: '_PokeApiStoreBase.getTeam');
+    try {
+      return super.getTeam(team);
+    } finally {
+      _$_PokeApiStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-pokeAPI: ${pokeAPI}
+pokeAPI: ${pokeAPI},
+pokeList: ${pokeList}
     ''';
   }
 }
