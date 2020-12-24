@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'profile_list.dart';
+import '../../dao/database.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -23,20 +27,51 @@ class _ProfileViewState extends State<ProfileView> {
               child: Row(
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      image: DecorationImage(
-                        image: AssetImage("Assets/gabriel.jpg"),
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50.0),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 0.5,
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(50.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
-                    ),
-                  ),
+                      child: FutureBuilder<String>(
+                        future: getFileUrl(),
+                        builder: (context, AsyncSnapshot<String> snapshot) {
+                          if (snapshot.data != "empty" &&
+                              snapshot.data != null) {
+                            print(snapshot.data);
+                            return RawMaterialButton(
+                              child: Image.network(
+                                snapshot.data,
+                                fit: BoxFit.fitWidth,
+                              ),
+                              onPressed: () {
+                                getImage();
+                              },
+                              padding: EdgeInsets.all(15),
+                              shape: CircleBorder(),
+                            );
+                          } else {
+                            print(snapshot.data);
+                            return RawMaterialButton(
+                              fillColor: Theme.of(context).accentColor,
+                              child: Icon(
+                                Icons.add_photo_alternate_rounded,
+                                color: Colors.white,
+                              ),
+                              elevation: 8,
+                              onPressed: () {
+                                getImage();
+                              },
+                              padding: EdgeInsets.all(15),
+                              shape: CircleBorder(),
+                            );
+                          }
+                        },
+                      )),
                   Container(
                     padding: EdgeInsets.only(left: 8),
                     width: MediaQuery.of(context).size.width * 0.6,
@@ -44,9 +79,19 @@ class _ProfileViewState extends State<ProfileView> {
                       children: [
                         Column(
                           children: [
-                            Text(
-                              "52",
-                              style: TextStyle(fontSize: 16),
+                            FutureBuilder<String>(
+                              future: getLikes(),
+                              builder:
+                                  (context, AsyncSnapshot<String> snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(snapshot.data,
+                                      style: TextStyle(fontSize: 16));
+                                } else {
+                                  return CircularProgressIndicator(
+                                    backgroundColor: Colors.black,
+                                  );
+                                }
+                              },
                             ),
                             Text(
                               "Curtidas",
@@ -59,13 +104,23 @@ class _ProfileViewState extends State<ProfileView> {
                           padding: EdgeInsets.only(
                               left: MediaQuery.of(context).size.width * 0.1),
                         ),
-                        Text(
-                          "@feggah",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        FutureBuilder<String>(
+                            future: getUsername(),
+                            builder: (context, AsyncSnapshot<String> snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                  "@" + snapshot.data,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                );
+                              } else {
+                                return CircularProgressIndicator(
+                                  backgroundColor: Colors.black,
+                                );
+                              }
+                            })
                       ],
                     ),
                   ),
@@ -87,5 +142,25 @@ class _ProfileViewState extends State<ProfileView> {
         ),
       ),
     );
+  }
+
+  Future getImage() async {
+    File _image;
+    ImagePicker picker = ImagePicker();
+    PickedFile pickedFile;
+    try {
+      pickedFile = await picker.getImage(source: ImageSource.camera);
+    } catch (e) {
+      print("O erro na seleção foi: " + e.toString());
+    }
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+
+    await saveImage(_image);
+    _image.delete();
   }
 }
