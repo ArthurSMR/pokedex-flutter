@@ -11,6 +11,8 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  File _image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,52 +28,27 @@ class _ProfileViewState extends State<ProfileView> {
             Container(
               child: Row(
                 children: [
-                  Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(50.0),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 0.5,
-                        ),
-                      ),
-                      child: FutureBuilder<String>(
-                        future: getFileUrl(),
-                        builder: (context, AsyncSnapshot<String> snapshot) {
-                          if (snapshot.data != "empty" &&
-                              snapshot.data != null) {
-                            print(snapshot.data);
-                            return RawMaterialButton(
-                              child: Image.network(
-                                snapshot.data,
-                                fit: BoxFit.fitWidth,
-                              ),
-                              onPressed: () {
-                                getImage();
-                              },
-                              padding: EdgeInsets.all(15),
-                              shape: CircleBorder(),
-                            );
-                          } else {
-                            print(snapshot.data);
-                            return RawMaterialButton(
-                              fillColor: Theme.of(context).accentColor,
-                              child: Icon(
-                                Icons.add_photo_alternate_rounded,
-                                color: Colors.white,
-                              ),
-                              elevation: 8,
-                              onPressed: () {
-                                getImage();
-                              },
-                              padding: EdgeInsets.all(15),
-                              shape: CircleBorder(),
-                            );
-                          }
-                        },
-                      )),
+                  FutureBuilder<Object>(
+                    future: getProfileImage(),
+                    builder: (context, AsyncSnapshot<Object> snapshot) {
+                      if (_image != null) {
+                        return buildProfileImageButton(
+                          image: FileImage(_image),
+                        );
+                      }
+                      if (snapshot.data.toString() == "empty") {
+                        return buildProfileIconButton();
+                      } else if (snapshot.hasData == false) {
+                        return CircularProgressIndicator(
+                          backgroundColor: Colors.black,
+                        );
+                      } else {
+                        return buildProfileImageButton(
+                          image: NetworkImage(snapshot.data),
+                        );
+                      }
+                    },
+                  ),
                   Container(
                     padding: EdgeInsets.only(left: 8),
                     width: MediaQuery.of(context).size.width * 0.6,
@@ -144,8 +121,7 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Future getImage() async {
-    File _image;
+  Future setImage() async {
     ImagePicker picker = ImagePicker();
     PickedFile pickedFile;
     try {
@@ -161,6 +137,62 @@ class _ProfileViewState extends State<ProfileView> {
     });
 
     await saveImage(_image);
-    _image.delete();
+  }
+
+  Future<String> getProfileImage() async {
+    var response = await getFileUrl();
+    if (response != "empty") {
+      return response;
+    }
+    return "empty";
+  }
+
+  InkWell buildProfileImageButton({ImageProvider image}) {
+    return InkWell(
+      onTap: () {
+        setImage();
+      },
+      child: Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(50.0),
+          border: Border.all(
+            color: Colors.black,
+            width: 0.5,
+          ),
+          image: DecorationImage(
+            image: image,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildProfileIconButton() {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(50.0),
+        border: Border.all(
+          color: Colors.black,
+          width: 0.5,
+        ),
+      ),
+      child: RawMaterialButton(
+        fillColor: Theme.of(context).accentColor,
+        child: Icon(
+          Icons.add_photo_alternate_rounded,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          setImage();
+        },
+        shape: CircleBorder(),
+      ),
+    );
   }
 }
