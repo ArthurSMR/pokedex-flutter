@@ -39,6 +39,14 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ),
               onPressed: () {
+                // shareOwnTeam();
+                getFirebaseTeam().then((team) {
+                  if (team.length == 6) {
+                    shareOwnTeam(team);
+                  } else {
+                    showAlertDialog(context);
+                  }
+                });
                 print("Compartilhar equipe");
               },
             ),
@@ -50,14 +58,46 @@ class _FeedViewState extends State<FeedView> {
                       child: PostList(snapshot.data),
                     );
                   } else {
-                    return CircularProgressIndicator(
-                      backgroundColor: Colors.black,
+                    return Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.black,
+                        ),
+                      ),
                     );
                   }
                 }),
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sua equipe está incompleta"),
+      content: Text(
+          "Para você compartilhar, você precisa ter 6 pokemons adicionados."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

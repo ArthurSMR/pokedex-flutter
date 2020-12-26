@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pokebla/dao/authentication.dart';
 import 'package:pokebla/model/post.dart';
+import 'package:pokebla/service/pokeapi_store.dart';
 
 Future<bool> registerUser(
     String user, String password, String email, String uid) async {
@@ -149,10 +151,15 @@ Future<List<Post>> getPosts() async {
         user: postData["username"],
         time: postData["time"],
         team: team,
-        likes: postData["likes"]);
+        likes: postData["likes"],
+        uid: postData["uid"]);
 
     postList.add(post);
   }
+  postList.sort((a, b) {
+    return b.time.compareTo(a.time);
+  });
+
   return postList;
 }
 
@@ -167,19 +174,77 @@ Future<List<String>> getTeamForPostWithDocument(
 
   teamSnapshot.docs.forEach((document) {
     var pokemonName = document.data();
-    team.add(pokemonName["name"]);
+    team.add(pokemonName["url"]);
   });
   return team;
 }
 
-Future<bool> incrementLike(String postId) async {
+Future<bool> incrementLike(String postId, String uid) async {
   DocumentReference postReference =
       FirebaseFirestore.instance.collection("posts").doc(postId);
 
   try {
     await postReference.update({"likes": FieldValue.increment(1)});
+    await incrementProfileLikesForUid(uid);
     return Future.value(true);
   } catch (e) {
+    return Future.value(false);
+  }
+}
+
+incrementProfileLikesForUid(String uid) async {
+  DocumentReference documentReference =
+      FirebaseFirestore.instance.collection("users").doc(uid);
+
+  await documentReference
+      .set({"likes": FieldValue.increment(1)}, SetOptions(merge: true));
+}
+
+shareOwnTeam(List<String> team) async {
+  PokeApiStore pokeApiStore = PokeApiStore();
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  DocumentReference documentReference =
+      FirebaseFirestore.instance.collection("posts").doc();
+
+  if (team.length == 6) {
+    pokeApiStore.fetchPokemonList().then((sucess) {
+      if (sucess) {
+        pokeApiStore.getTeam(team).then((sucess) async {
+          if (sucess) {
+            var teamPost = pokeApiStore.pokeList;
+            var id = documentReference.id;
+            var likes = 0;
+            var time = DateTime.now().millisecondsSinceEpoch;
+            var username = await getUsername();
+            var uid = auth.currentUser.uid;
+
+            try {
+              await documentReference.set({
+                "id": id,
+                "likes": likes,
+                "time": time,
+                "username": username,
+                "uid": uid
+              });
+
+              var teamCollection = documentReference.collection("team");
+              for (var pokemon in teamPost) {
+                teamCollection
+                    .doc(pokemon.name.toLowerCase())
+                    .set({"url": pokemon.img});
+              }
+
+              return Future.value(true);
+            } catch (e) {
+              return Future.value(false);
+            }
+          }
+        });
+      }
+    });
+  } else {
     return Future.value(false);
   }
 }
