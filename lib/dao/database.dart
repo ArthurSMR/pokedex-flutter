@@ -62,7 +62,6 @@ Future<bool> removePokemonFromTeam(String pokemonName) async {
       .collection("users/" + auth.currentUser.uid + "/team");
 
   try {
-    print("O pokemon a ser removido sera: " + pokemonName);
     await teamCollection.doc(pokemonName).delete();
     return Future.value(true);
   } catch (e) {
@@ -118,6 +117,7 @@ Future<String> getFileUrl() async {
   FirebaseAuth auth = FirebaseAuth.instance;
   DocumentReference documentReference =
       FirebaseFirestore.instance.collection("users").doc(auth.currentUser.uid);
+
   try {
     DocumentSnapshot snapshot = await documentReference.get();
     var data = snapshot.data();
