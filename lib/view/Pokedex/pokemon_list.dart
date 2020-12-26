@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../service/pokeapi_store.dart';
 import '../../model/pokeapi.dart';
 import 'pokemon_cell.dart';
 
 class PokemonList extends StatefulWidget {
-  List<Pokemon> pokemonList;
+  final List<Pokemon> pokemonList;
   PokemonList(this.pokemonList);
 
   @override

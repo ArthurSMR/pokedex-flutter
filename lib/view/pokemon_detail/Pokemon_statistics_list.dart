@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
-import 'package:pokebla/service/pokeapi_store.dart';
 import 'package:pokebla/service/pokeapiv2_store.dart';
 import 'statistics_type.dart';
 import 'pokemon_statistics_cell.dart';
 import '../../model/pokeapi.dart';
-import 'package:pokebla/model/pokeapiv2.dart';
 
 class PokemonStatisticsList {
   final List<StatisticsType> statisticTypeList = [

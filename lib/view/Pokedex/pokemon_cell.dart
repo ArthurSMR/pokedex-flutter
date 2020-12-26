@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokebla/model/pokeapiv2.dart';
 import '../../model/pokeapi.dart';
 import '../pokemon_detail/pokemon_detail.dart';
 import '../../dao/database.dart';
