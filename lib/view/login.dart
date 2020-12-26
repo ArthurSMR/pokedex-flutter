@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokebla/dao/database.dart';
+import 'package:pokebla/model/post.dart';
 import 'package:pokebla/styles/text_field_style.dart';
 import 'register.dart';
 import '../model/user.dart';
@@ -9,6 +11,7 @@ class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final RegisterView register = new RegisterView();
   final User user = new User();
+  Future<List<Post>> posts = getPosts();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

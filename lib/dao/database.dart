@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pokebla/model/post.dart';
 
 Future<bool> registerUser(
     String user, String password, String email, String uid) async {
@@ -126,4 +127,42 @@ Future<String> getFileUrl() async {
   } catch (e) {
     return "empty";
   }
+}
+
+Future<List<Post>> getPosts() async {
+  List<Post> postList = List<Post>();
+
+  CollectionReference reference =
+      FirebaseFirestore.instance.collection("posts");
+
+  QuerySnapshot documentSnapshot = await reference.get();
+
+  for (int i = 0; i < documentSnapshot.docs.length; i++) {
+    var document = documentSnapshot.docs[i];
+    var postData = document.data();
+
+    var team = await getTeamForPostWithDocument(document: document);
+
+    var post = Post(postData["username"], postData["time"].toString(), team,
+        postData["likes"]);
+
+    postList.add(post);
+  }
+  return postList;
+}
+
+Future<List<String>> getTeamForPostWithDocument(
+    {QueryDocumentSnapshot document}) async {
+  CollectionReference teamReference = FirebaseFirestore.instance
+      .collection("posts/" + document.id.toString() + "/team");
+
+  QuerySnapshot teamSnapshot = await teamReference.get();
+
+  List<String> team = List<String>();
+
+  teamSnapshot.docs.forEach((document) {
+    var pokemonName = document.data();
+    team.add(pokemonName["name"]);
+  });
+  return team;
 }

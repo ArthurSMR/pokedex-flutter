@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'feed_list.dart';
 import '../../model/post.dart';
 import '../../mock/post_data.dart';
+import '../../dao/database.dart';
 
 class FeedView extends StatefulWidget {
   @override
@@ -9,8 +10,6 @@ class FeedView extends StatefulWidget {
 }
 
 class _FeedViewState extends State<FeedView> {
-  List<Post> posts = PostData.mockPosts();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +44,19 @@ class _FeedViewState extends State<FeedView> {
                 print("Compartilhar equipe");
               },
             ),
-            Expanded(
-              child: PostList(this.posts),
-            )
+            FutureBuilder(
+                future: getPosts(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: PostList(snapshot.data),
+                    );
+                  } else {
+                    return CircularProgressIndicator(
+                      backgroundColor: Colors.black,
+                    );
+                  }
+                }),
           ],
         ),
       ),
