@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'feed_list.dart';
-import '../../model/post.dart';
-import '../../mock/post_data.dart';
 import '../../dao/database.dart';
 
 class FeedView extends StatefulWidget {

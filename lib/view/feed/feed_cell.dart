@@ -31,7 +31,7 @@ class FeedCellView {
                         ),
                       ),
                       Text(
-                        post.time,
+                        post.getDate(),
                         style: TextStyle(
                           fontSize: 14,
                           color: Color(0xFF7D7D7D),

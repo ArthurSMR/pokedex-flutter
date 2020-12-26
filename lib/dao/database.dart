@@ -143,8 +143,8 @@ Future<List<Post>> getPosts() async {
 
     var team = await getTeamForPostWithDocument(document: document);
 
-    var post = Post(postData["username"], postData["time"].toString(), team,
-        postData["likes"]);
+    var post =
+        Post(postData["username"], postData["time"], team, postData["likes"]);
 
     postList.add(post);
   }
