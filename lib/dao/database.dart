@@ -140,11 +140,16 @@ Future<List<Post>> getPosts() async {
   for (int i = 0; i < documentSnapshot.docs.length; i++) {
     var document = documentSnapshot.docs[i];
     var postData = document.data();
+    var id = document.id;
 
     var team = await getTeamForPostWithDocument(document: document);
 
-    var post =
-        Post(postData["username"], postData["time"], team, postData["likes"]);
+    var post = Post(
+        id: id,
+        user: postData["username"],
+        time: postData["time"],
+        team: team,
+        likes: postData["likes"]);
 
     postList.add(post);
   }
@@ -165,4 +170,16 @@ Future<List<String>> getTeamForPostWithDocument(
     team.add(pokemonName["name"]);
   });
   return team;
+}
+
+Future<bool> incrementLike(String postId) async {
+  DocumentReference postReference =
+      FirebaseFirestore.instance.collection("posts").doc(postId);
+
+  try {
+    await postReference.update({"likes": FieldValue.increment(1)});
+    return Future.value(true);
+  } catch (e) {
+    return Future.value(false);
+  }
 }
