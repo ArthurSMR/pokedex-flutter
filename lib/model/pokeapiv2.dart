@@ -3,7 +3,7 @@ class PokeApiV2 {
   int baseExperience;
   List<GameIndices> gameIndices;
   int height;
-  List<Null> heldItems;
+  // List<Null> heldItems;
   int id;
   bool isDefault;
   String locationAreaEncounters;
@@ -21,7 +21,7 @@ class PokeApiV2 {
       this.baseExperience,
       this.gameIndices,
       this.height,
-      this.heldItems,
+      // this.heldItems,
       this.id,
       this.isDefault,
       this.locationAreaEncounters,
@@ -242,13 +242,13 @@ class VersionGroupDetails {
 
 class Sprites {
   String backDefault;
-  Null backFemale;
+  String backFemale;
   String backShiny;
-  Null backShinyFemale;
+  String backShinyFemale;
   String frontDefault;
-  Null frontFemale;
+  String frontFemale;
   String frontShiny;
-  Null frontShinyFemale;
+  String frontShinyFemale;
   Other other;
   Versions versions;
 
@@ -633,13 +633,13 @@ class GenerationIv {
 
 class DiamondPearl {
   String backDefault;
-  Null backFemale;
+  String backFemale;
   String backShiny;
-  Null backShinyFemale;
+  String backShinyFemale;
   String frontDefault;
-  Null frontFemale;
+  String frontFemale;
   String frontShiny;
-  Null frontShinyFemale;
+  String frontShinyFemale;
 
   DiamondPearl(
       {this.backDefault,
@@ -699,13 +699,13 @@ class GenerationV {
 class BlackWhite {
   DiamondPearl animated;
   String backDefault;
-  Null backFemale;
+  String backFemale;
   String backShiny;
-  Null backShinyFemale;
+  String backShinyFemale;
   String frontDefault;
-  Null frontFemale;
+  String frontFemale;
   String frontShiny;
-  Null frontShinyFemale;
+  String frontShinyFemale;
 
   BlackWhite(
       {this.animated,
@@ -778,9 +778,9 @@ class GenerationVi {
 
 class OmegarubyAlphasapphire {
   String frontDefault;
-  Null frontFemale;
+  String frontFemale;
   String frontShiny;
-  Null frontShinyFemale;
+  String frontShinyFemale;
 
   OmegarubyAlphasapphire(
       {this.frontDefault,
