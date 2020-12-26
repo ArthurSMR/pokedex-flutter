@@ -58,7 +58,7 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
       ActionController(name: '_PokeApiStoreBase');
 
   @override
-  dynamic fetchPokemonList() {
+  Future<bool> fetchPokemonList() {
     final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
         name: '_PokeApiStoreBase.fetchPokemonList');
     try {
@@ -69,7 +69,7 @@ mixin _$PokeApiStore on _PokeApiStoreBase, Store {
   }
 
   @override
-  dynamic getTeam(List<String> team) {
+  Future<bool> getTeam(List<String> team) {
     final _$actionInfo = _$_PokeApiStoreBaseActionController.startAction(
         name: '_PokeApiStoreBase.getTeam');
     try {

@@ -17,10 +17,11 @@ abstract class _PokeApiStoreBase with Store {
   PokeAPI get pokeAPI => _pokeAPI;
 
   @action
-  fetchPokemonList() {
+  Future<bool> fetchPokemonList() {
     loadPokeAPI().then((pokeList) {
       _pokeAPI = pokeList;
     });
+    return Future.value(true);
   }
 
   @observable
@@ -30,7 +31,7 @@ abstract class _PokeApiStoreBase with Store {
   List<Pokemon> get pokeList => _pokeList;
 
   @action
-  getTeam(List<String> team) {
+  Future<bool> getTeam(List<String> team) {
     List<Pokemon> list = List<Pokemon>();
     team.forEach((pokemonName) {
       pokeAPI.pokemons.forEach((pokemon) {
@@ -40,6 +41,7 @@ abstract class _PokeApiStoreBase with Store {
       });
     });
     _pokeList = list;
+    return Future.value(true);
   }
 
   Future<PokeAPI> loadPokeAPI() async {

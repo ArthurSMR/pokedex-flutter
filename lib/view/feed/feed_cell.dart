@@ -31,7 +31,7 @@ class FeedCellView {
                         ),
                       ),
                       Text(
-                        post.time,
+                        post.getDate(),
                         style: TextStyle(
                           fontSize: 14,
                           color: Color(0xFF7D7D7D),
@@ -152,42 +152,64 @@ class FeedCellView {
                 ],
               ),
             ),
-            Container(
-              child: Row(
-                children: [
-                  FlatButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onPressed: () {
-                      print("Curtir post do ${post.user}");
-                    },
-                    child: Row(
-                      children: [
-                        Text(
-                          "Curtir",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left:
-                                  MediaQuery.of(context).size.height * 0.0125),
-                        ),
-                        Icon(Icons.thumb_up_outlined),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.0125),
-                  ),
-                  Text(post.likes.toString(), style: TextStyle(fontSize: 16)),
-                ],
-              ),
-            )
+            LikeButton(post),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class LikeButton extends StatefulWidget {
+  final Post post;
+  LikeButton(this.post);
+  @override
+  LikeButtonState createState() => LikeButtonState(post);
+}
+
+class LikeButtonState extends State<LikeButton> {
+  int likes;
+  Post post;
+  LikeButtonState(Post post) {
+    this.post = post;
+    this.likes = post.likes;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          FlatButton(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            onPressed: () {
+              post.like();
+              setState(() {
+                this.likes += 1;
+              });
+            },
+            child: Row(
+              children: [
+                Text(
+                  "Curtir",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.height * 0.0125),
+                ),
+                Icon(Icons.thumb_up_outlined),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.height * 0.0125),
+          ),
+          Text(this.likes.toString(), style: TextStyle(fontSize: 16)),
+        ],
       ),
     );
   }
