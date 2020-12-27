@@ -204,51 +204,54 @@ incrementProfileLikesForUid(String uid) async {
       .set({"likes": FieldValue.increment(1)}, SetOptions(merge: true));
 }
 
-shareOwnTeam(List<String> team) async {
+Future<bool> shareOwnTeam(List<String> team) async {
   PokeApiStore pokeApiStore = PokeApiStore();
 
+  var fetchPokemonListWithSucess = await pokeApiStore.fetchPokemonList();
+
+  if (fetchPokemonListWithSucess) {
+    var getTeamSucess = await pokeApiStore.getTeam(team);
+
+    if (getTeamSucess) {
+      await postTeamToDatabase(pokeApiStore);
+      return Future.value(true);
+    } else {
+      print("Erro ao chamar o método getTeam");
+    }
+  } else {
+    print("Erro ao dar fetch na lista de pokemons");
+  }
+  return Future.value(false);
+}
+
+postTeamToDatabase(PokeApiStore pokeApiStore) async {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   DocumentReference documentReference =
       FirebaseFirestore.instance.collection("posts").doc();
+  var teamPost = pokeApiStore.pokeList;
+  var id = documentReference.id;
+  var likes = 0;
+  var time = DateTime.now().millisecondsSinceEpoch;
+  var username = await getUsername();
+  var uid = auth.currentUser.uid;
 
-  if (team.length == 6) {
-    pokeApiStore.fetchPokemonList().then((sucess) {
-      if (sucess) {
-        pokeApiStore.getTeam(team).then((sucess) async {
-          if (sucess) {
-            var teamPost = pokeApiStore.pokeList;
-            var id = documentReference.id;
-            var likes = 0;
-            var time = DateTime.now().millisecondsSinceEpoch;
-            var username = await getUsername();
-            var uid = auth.currentUser.uid;
-
-            try {
-              await documentReference.set({
-                "id": id,
-                "likes": likes,
-                "time": time,
-                "username": username,
-                "uid": uid
-              });
-
-              var teamCollection = documentReference.collection("team");
-              for (var pokemon in teamPost) {
-                teamCollection
-                    .doc(pokemon.name.toLowerCase())
-                    .set({"url": pokemon.img});
-              }
-
-              return Future.value(true);
-            } catch (e) {
-              return Future.value(false);
-            }
-          }
-        });
-      }
+  try {
+    await documentReference.set({
+      "id": id,
+      "likes": likes,
+      "time": time,
+      "username": username,
+      "uid": uid
     });
-  } else {
+
+    var teamCollection = documentReference.collection("team");
+    for (var pokemon in teamPost) {
+      teamCollection.doc(pokemon.name.toLowerCase()).set({"url": pokemon.img});
+    }
+    return Future.value(true);
+  } catch (e) {
+    print(e);
     return Future.value(false);
   }
 }
