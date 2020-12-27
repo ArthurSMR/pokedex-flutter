@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokebla/model/post.dart';
 import 'feed_list.dart';
 import '../../dao/database.dart';
 
@@ -8,6 +9,7 @@ class FeedView extends StatefulWidget {
 }
 
 class _FeedViewState extends State<FeedView> {
+  Future<List<Post>> futurePostList = getPosts();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,19 +41,23 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ),
               onPressed: () {
-                // shareOwnTeam();
                 getFirebaseTeam().then((team) {
                   if (team.length == 6) {
-                    shareOwnTeam(team);
+                    shareOwnTeam(team).then((sucess) {
+                      if (sucess) {
+                        setState(() {
+                          futurePostList = getPosts();
+                        });
+                      }
+                    });
                   } else {
                     showAlertDialog(context);
                   }
                 });
-                print("Compartilhar equipe");
               },
             ),
             FutureBuilder(
-                future: getPosts(),
+                future: futurePostList,
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return Expanded(
