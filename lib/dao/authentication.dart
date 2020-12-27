@@ -4,20 +4,23 @@ import 'package:pokebla/dao/database.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 
 Future<bool> signUp(String email, String password, String user) async {
-  try {
-    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    bool result =
-        await registerUser(user, password, email, userCredential.user.uid);
-    if (result) {
-      return Future.value(true);
-    } else {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-      await auth.currentUser.delete();
-      return Future.value(false);
-    }
-  } on Exception catch (e) {
-    print(e);
+  UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+
+  bool result = await registerUser(
+    user,
+    password,
+    email,
+    userCredential.user.uid,
+  );
+
+  if (result) {
+    return Future.value(true);
+  } else {
+    await auth.signInWithEmailAndPassword(email: email, password: password);
+    await auth.currentUser.delete();
     return Future.value(false);
   }
 }

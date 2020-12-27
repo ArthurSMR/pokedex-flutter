@@ -8,7 +8,7 @@ import '../dao/authentication.dart';
 class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final RegisterView register = new RegisterView();
-  final User user = new User();
+  final UserModel user = new UserModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +117,7 @@ class LoginView extends StatelessWidget {
                       ),
                     );
                   } else {
-                    print("Login was not completed successfully");
+                    showAlertDialog(context);
                   }
                 }
               },
@@ -135,6 +135,31 @@ class LoginView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("E-mail/senha incorretos"),
+      content: Text(
+          "As informações não foram preenchidas corretamente, por favor, tente novamente."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

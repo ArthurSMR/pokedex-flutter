@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
 import '../model/user.dart';
@@ -6,7 +7,7 @@ import '../dao/authentication.dart';
 
 class RegisterView {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  final User data = new User();
+  final UserModel data = new UserModel();
   final TextEditingController pass = TextEditingController();
   final TextEditingController confirmPass = TextEditingController();
 
@@ -212,15 +213,39 @@ class RegisterView {
                           if (formKey.currentState.validate()) {
                             formKey.currentState.save();
                             data.printValues();
-
-                            bool result = await signUp(
-                                data.email, data.password, data.username);
-                            if (result) {
-                              Navigator.pop(context);
-                              pass.clear();
-                              confirmPass.clear();
-                            } else {
-                              print("Register account was not completed");
+                            try {
+                              bool result = await signUp(
+                                  data.email, data.password, data.username);
+                              if (result) {
+                                Navigator.pop(context);
+                                pass.clear();
+                                confirmPass.clear();
+                              }
+                            } on FirebaseAuthException catch (e) {
+                              switch (e.code) {
+                                case "email-already-in-use":
+                                  showAlertDialog(
+                                    context,
+                                    "E-mail já cadastrado",
+                                    "Preencha o campo com outro e-mail",
+                                  );
+                                  break;
+                                case "invalid-email":
+                                  showAlertDialog(
+                                    context,
+                                    "E-mail inválido",
+                                    "Preencha o campo com um e-mail válido",
+                                  );
+                                  break;
+                                case "weak-password":
+                                  showAlertDialog(
+                                    context,
+                                    "Senha fraca",
+                                    "Sua senha deve ter ao menos 6 caracteres",
+                                  );
+                                  break;
+                                default:
+                              }
                             }
                           }
                         },
@@ -232,6 +257,30 @@ class RegisterView {
             );
           },
         );
+      },
+    );
+  }
+
+  showAlertDialog(BuildContext context, String title, String content) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }
