@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pokebla/view/login.dart';
 import 'view/register.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'dao/database.dart';
 
 Map<int, Color> color = {
   50: Color.fromRGBO(255, 218, 78, .1),

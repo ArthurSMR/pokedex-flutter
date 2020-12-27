@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'profile_list.dart';
 import '../../dao/database.dart';
+import '../../dao/authentication.dart';
 
 class ProfileView extends StatefulWidget {
   @override
@@ -19,6 +21,18 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text("Perfil"),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                await signOutUser();
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(16),
@@ -121,22 +135,44 @@ class _ProfileViewState extends State<ProfileView> {
     );
   }
 
-  Future setImage() async {
-    ImagePicker picker = ImagePicker();
-    PickedFile pickedFile;
-    try {
-      pickedFile = await picker.getImage(source: ImageSource.camera);
-    } catch (e) {
-      print("O erro na seleção foi: " + e.toString());
-    }
+  setImage() async {
+    var status = await Permission.camera.status;
+    if (status.isGranted || status.isUndetermined) {
+      ImagePicker picker = ImagePicker();
+      PickedFile pickedFile;
 
-    setState(() {
+      try {
+        pickedFile = await picker.getImage(
+            source: ImageSource.camera, maxHeight: 100, maxWidth: 100);
+        print(pickedFile);
+      } catch (e) {
+        print("O erro na seleção foi: " + e.toString());
+      }
+
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        await saveImage(_image);
       }
-    });
-
-    await saveImage(_image);
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: Text("Permissão para acessar a câmera"),
+          content: Text(
+              "Esse aplicativo precisa de acesso a câmera para tirar fotos para carregar na foto do perfil"),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              child: Text("Cancelar"),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoDialogAction(
+              child: Text("Configurações"),
+              onPressed: () => openAppSettings(),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Future<String> getProfileImage() async {
@@ -149,8 +185,8 @@ class _ProfileViewState extends State<ProfileView> {
 
   InkWell buildProfileImageButton({ImageProvider image}) {
     return InkWell(
-      onTap: () {
-        setImage();
+      onTap: () async {
+        await setImage();
       },
       child: Container(
         width: 100,
@@ -188,8 +224,8 @@ class _ProfileViewState extends State<ProfileView> {
           Icons.add_photo_alternate_rounded,
           color: Colors.white,
         ),
-        onPressed: () {
-          setImage();
+        onPressed: () async {
+          await setImage();
         },
         shape: CircleBorder(),
       ),
