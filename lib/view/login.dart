@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokebla/dao/database.dart';
-import 'package:pokebla/model/post.dart';
 import 'package:pokebla/styles/text_field_style.dart';
 import 'register.dart';
 import '../model/user.dart';
@@ -11,7 +9,6 @@ class LoginView extends StatelessWidget {
   final GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final RegisterView register = new RegisterView();
   final User user = new User();
-  Future<List<Post>> posts = getPosts();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,9 +107,9 @@ class LoginView extends StatelessWidget {
               onPressed: () async {
                 if (formKey.currentState.validate()) {
                   formKey.currentState.save();
-                  user.printValues();
                   bool result = await signIn(user.email, user.password);
                   if (result) {
+                    formKey.currentState.reset();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
