@@ -200,24 +200,24 @@ incrementProfileLikesForUid(String uid) async {
       .set({"likes": FieldValue.increment(1)}, SetOptions(merge: true));
 }
 
-shareOwnTeam(List<String> team) async {
+Future<bool> shareOwnTeam(List<String> team) async {
   PokeApiStore pokeApiStore = PokeApiStore();
 
-  pokeApiStore.fetchPokemonList().then((fetchPokemonListSucess) {
-    if (fetchPokemonListSucess) {
-      pokeApiStore.getTeam(team).then((getTeamSucess) async {
-        if (getTeamSucess) {
-          postTeamToDatabase(pokeApiStore);
-        } else {
-          print("Erro ao chamar getTeam ");
-          return Future.value(false);
-        }
-      });
+  var fetchPokemonListWithSucess = await pokeApiStore.fetchPokemonList();
+
+  if (fetchPokemonListWithSucess) {
+    var getTeamSucess = await pokeApiStore.getTeam(team);
+
+    if (getTeamSucess) {
+      await postTeamToDatabase(pokeApiStore);
+      return Future.value(true);
     } else {
-      print("Erro ao dar o fetch na lista de pokemons!");
-      return Future.value(false);
+      print("Erro ao chamar o método getTeam");
     }
-  });
+  } else {
+    print("Erro ao dar fetch na lista de pokemons");
+  }
+  return Future.value(false);
 }
 
 postTeamToDatabase(PokeApiStore pokeApiStore) async {
