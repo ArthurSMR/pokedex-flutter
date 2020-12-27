@@ -39,10 +39,10 @@ class _FeedViewState extends State<FeedView> {
                 ),
               ),
               onPressed: () {
-                // shareOwnTeam();
                 getFirebaseTeam().then((team) {
                   if (team.length == 6) {
                     shareOwnTeam(team);
+                    setState(() {});
                   } else {
                     showAlertDialog(context);
                   }
