@@ -6,9 +6,14 @@ import 'package:pokebla/model/post.dart';
 import 'package:pokebla/service/pokeapi_store.dart';
 
 Future<bool> registerUser(
-    String user, String password, String email, String uid) async {
+  String user,
+  String password,
+  String email,
+  String uid,
+) async {
   CollectionReference loginCollections =
       FirebaseFirestore.instance.collection("login");
+
   try {
     await loginCollections
         .doc(uid)

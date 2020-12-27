@@ -57,7 +57,10 @@ class _PokemonListState extends State<PokemonList> {
             });
 
             Scaffold.of(context).showSnackBar(
-                SnackBar(content: Text("${pokemon.name} foi deletado")));
+              SnackBar(
+                content: Text("${pokemon.name} foi deletado"),
+              ),
+            );
           },
           background: Container(
             alignment: Alignment.centerRight,
